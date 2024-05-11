@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #000;
+    color: #fff;
+}
+
+.terminal {
+    width: 600px;
+    height: 400px;
+    border: 2px solid #00ff00;
+    border-radius: 5px;
+    margin: 50px auto;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.terminal-header {
+    background-color: #222;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    border-bottom: 2px solid #00ff00;
+}
+
+.terminal-buttons {
+    float: right;
+}
+
+.terminal-button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.terminal-button.close {
+    background-color: #ff0000;
+}
+
+.terminal-button.minimize {
+    background-color: #ffc900;
+}
+
+.terminal-button.expand {
+    background-color: #00ff00;
+}
+
+.terminal-body {
+    padding: 10px;
+    height: calc(100% - 40px);
+    overflow-y: auto;
+}
+
+.terminal-content {
+    line-height: 1.5;
+}
+
+.terminal-input {
+    width: calc(100% - 20px);
+    height: 100px;
+    background-color: #222;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    resize: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+}
+
+.prompt {
+    display: inline-block;
+    margin-right: 5px;
+    color: #00ff00;
+}

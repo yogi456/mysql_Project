@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Terminal</title>
+    <link rel="stylesheet" href="stles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="terminal-button close"></div>
+                <div class="terminal-button minimize"></div>
+                <div class="terminal-button expand"></div>
+            </div>
+            SQL Terminal
+        </div>
+        <div class="terminal-body">
+            <div class="terminal-content" id="terminal-content">
+                <div>Welcome to SQL Terminal</div>
+                <div>Type your SQL queries below and press Enter to execute:</div>
+                <div class="prompt">></div>
+                <textarea id="query" class="terminal-input" placeholder="Enter your SQL query here..."></textarea>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const terminalContent = document.getElementById("terminal-content");
+            const queryInput = document.getElementById("query");
+
+            // Event listener for Enter key press in the query input
+            queryInput.addEventListener("keydown", function(event) {
+                if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault();
+                    executeQuery();
+                }
+            });
+
+            function executeQuery() {
+                const query = queryInput.value.trim();
+
+                if (query === "") return;
+
+                addTerminalContent(`> ${query}`, "user-input"); // Display user input in the terminal
+
+                fetch('/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: query })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Display server response in the terminal
+                    addTerminalContent(JSON.stringify(data), "server-response");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    addTerminalContent('Error executing query', "error");
+                });
+
+                // Clear the input field after executing the query
+                queryInput.value = "";
+            }
+
+            function addTerminalContent(content, className) {
+                const contentElement = document.createElement("div");
+                contentElement.textContent = content;
+                contentElement.classList.add(className);
+                terminalContent.appendChild(contentElement);
+            }
+        });
+    </script>
+</body>
+</html>
